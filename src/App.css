@@ -6,13 +6,11 @@
 
 * {
     margin: 0;
-    padding: 0;
-    vertical-align: baseline;
     font-family: "Manrope";
+
 }
 
 html {
-    line-height: 1.5;
     tab-size: 4;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -23,5 +21,8 @@ html {
 body {
     min-height: 100dvh;
     text-wrap: pretty;
+    background-color: #101922;
+    color: white;
+
 }
 
