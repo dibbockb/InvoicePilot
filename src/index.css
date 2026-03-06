@@ -7,3 +7,34 @@
   font-weight: 500;
   font-style: normal;
 }
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    font-family: "Manrope";
+}
+
+section {
+    background-color: #101922;
+}
+
+html {
+    tab-size: 4;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    min-height: 100dvh;
+    text-wrap: pretty;
+    background-color: #101922;
+    color: white;
+}
+
