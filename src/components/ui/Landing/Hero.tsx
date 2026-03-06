@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const Hero = () => {
     return (
-        <section>
+        <section className="py-20">
 
             <div className="flex justify-center items-end">
                 <div >
