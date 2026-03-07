@@ -36,31 +36,31 @@ const Footer = () => {
                         <a href="https://www.google.com/search?q=InvoicePilot%20by%20dibbockb%20twitter%20page" target="_blank"><FaXTwitter className="shadow-2xl h-6 w-6 hover:scale-105"></FaXTwitter></a>
                     </div>
                     <br />
-                    <button onClick={goToTop} className="flex text-white/75 max-w-fit gap-2 justify-center items-center outline-1 outline-dotted outline-white/20 shadow-2xl rounded-xl w-fit h-10 px-5 hover:bg-accent duration-150 transition-all "> <FaAngleDoubleUp></FaAngleDoubleUp> Back To Top</button>
+                    <button onClick={goToTop} className="flex text-white/75 max-w-fit gap-2 shadow-md hover:shadow-lg justify-center items-center outline-1 outline-dotted outline-white/20 shadow-2xl rounded-xl w-fit h-10 px-5 hover:bg-accent duration-150 transition-all "> <FaAngleDoubleUp></FaAngleDoubleUp> Back To Top</button>
                 </div>
 
                 {/* footer sitemap */}
                 <div className="flex flex-col justify-center text-left items-start gap-3">
                     <h5>Site Map</h5>
                     <br />
-                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/"}>Homepage</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/features"}>Features</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/pricing"}>Pricing</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/solutions"}>Solutions</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/about"}>About</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/contact"}>Contact</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/terms"}>Terms of Service</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/"}>Homepage</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/features"}>Features</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/pricing"}>Pricing</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/solutions"}>Solutions</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/about"}>About</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/contact"}>Contact</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/terms"}>Terms of Service</Link>
                 </div>
 
                 {/* footer sub */}
                 <section className="flex flex-col justify-center text-left items-start gap-3 pl-25">
                     <p className="pl-2">Subscribe to our newsletter</p>
-                    <input type="text" placeholder="Your e-mail" className="bg-white/10 rounded-3xl h-10 w-75 pl-5 transition-all duration-300" />
-                    <button onClick={handleSubscribe} className="text-white bg-accent hover:brightness-85 transition-all duration-300 h-12 w-fit px-5 rounded-2xl">Subscribe</button>
+                    <input type="text" placeholder="Your e-mail" className="bg-white/10 rounded-3xl  shadow-md hover:shadow-lg h-10 w-75 pl-5 transition-all duration-300" />
+                    <button onClick={handleSubscribe} className="text-white bg-accent hover:brightness-85 transition-all shadow-md hover:shadow-lg duration-300 h-12 w-fit px-5 rounded-2xl">Subscribe</button>
                 </section>
             </div>
 
-            <p className="text-white text-center py-2 bg-[#192b3da2]">© 2026 - InvoicePilot. Created by <a href="https://www.dibbockb.com/" target="_blank" className="text-accent"> [.dibbockb]</a></p>
+            <p className="text-white text-center py-2 bg-[#192b3da2] shadow-md hover:shadow-lg">© 2026 - InvoicePilot. Created by <a href="https://www.dibbockb.com/" target="_blank" className="text-accent"> [.dibbockb]</a></p>
         </footer>
     )
 }
