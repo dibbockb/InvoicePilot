@@ -60,7 +60,7 @@ const Footer = () => {
                 </section>
             </div>
 
-            <p className="text-white text-center py-2">© 2026 - InvoicePilot. Created by <a href="https://www.dibbockb.com/" target="_blank" className="text-accent"> [.dibbockb]</a></p>
+            <p className="text-white text-center py-2 bg-[#192b3da2]">© 2026 - InvoicePilot. Created by <a href="https://www.dibbockb.com/" target="_blank" className="text-accent"> [.dibbockb]</a></p>
         </footer>
     )
 }
