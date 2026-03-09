@@ -21,7 +21,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6 w-100 py-25 mx-auto animate-accordion-down",)} {...props}>
+    <div className={cn("flex flex-col gap-6 w-100 py-45 mx-auto animate-accordion-down",)} {...props}>
       <Card className="bg-secondary text-white px-8">
         <CardHeader className="pb-5 pt-5">
           <CardTitle className="mx-auto text-2xl ">Login to InvoicePilot</CardTitle>

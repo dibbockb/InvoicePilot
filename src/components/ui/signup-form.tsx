@@ -17,7 +17,7 @@ import { Link } from "react-router-dom"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   return (
-    <Card className="bg-secondary text-white px-8 " {...props}>
+    <Card className="bg-secondary text-white px-8" {...props}>
       <CardHeader className="">
         <CardTitle className="mx-auto text-2xl ">Create an account</CardTitle>
         <CardDescription className="text-white text-center">
