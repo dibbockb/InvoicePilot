@@ -43,13 +43,13 @@ const Footer = () => {
                 <div className="flex flex-col justify-center text-left items-start gap-3">
                     <h5>Site Map</h5>
                     <br />
-                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/"}>Homepage</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/features"}>Features</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/pricing"}>Pricing</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/solutions"}>Solutions</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/about"}>About</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/contact"}>Contact</Link>
-                    <Link className="text-white/75 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg" to={"/terms"}>Terms of Service</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/"}>Homepage</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/features"}>Features</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/pricing"}>Pricing</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/solutions"}>Solutions</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/about"}>About</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/contact"}>Contact</Link>
+                    <Link className="text-white/75 hover:text-white transition-all duration-300" to={"/terms"}>Terms of Service</Link>
                 </div>
 
                 {/* footer sub */}

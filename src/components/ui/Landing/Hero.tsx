@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
+import { Fade } from "react-awesome-reveal";
 
 const Hero = () => {
     return (
-        <section className="py-15">
+        <Fade className="py-15">
 
-            <section className="flex justify-center items-start">
+            <section className="flex justify-center items-start" >
                 <div >
                     <div className="flex items-center justify-left px-5 w-fit h-8 gap-1 bg-[#12273b] rounded-2xl">
                         <svg width="18" height="18" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -230,14 +231,13 @@ const Hero = () => {
 
             {/* cta */}
             <div className="bg-[#2b8cee] rounded-2xl flex flex-col items-center text-center px-25 py-25 w-fit justify-self-center shadow-md hover:shadow-lg">
-                <h1 className="text-white text-[4rem] font-medium leading-18 ">Ready to take control of your
-                    business?</h1>
+                <h1 className="text-white text-[4rem] font-medium leading-18 ">Ready to send your first invoice?</h1>
 
                 <p className="text-white text-center w-150 font-medium text-xl pt-3">Join over 10,000 freelancers who are building more profitable, less
                     stressful businesses with InvoicePilot.</p>
 
                 <div className="flex gap-5 pt-6">
-                    <Link to={"/onboarding"} className="flex justify-center items-center gap-2 text-black bg-white hover:bg-white/80 transition-all duration-300 w-fit h-15 px-5 outline-1 outline-white  rounded-xl font-medium shadow-md hover:shadow-lg">Start Free Trial <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <Link to={"/onboarding"} className="flex justify-center items-center gap-2 text-black bg-white hover:bg-white/80 transition-all duration-300 w-fit h-15 px-5 outline-1 outline-white  rounded-xl font-medium shadow-md hover:shadow-lg">Create Free Invoice<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z" fill="black" />
                     </svg>
                     </Link>
@@ -246,7 +246,7 @@ const Hero = () => {
                     </Link>
                 </div>
             </div>
-        </section>
+        </Fade>
     )
 }
 
