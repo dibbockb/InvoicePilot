@@ -1,10 +1,13 @@
+import { LoginForm } from "@/components/ui/login-form"
+import { Fade } from "react-awesome-reveal"
 
 const Login = () => {
+
+
     return (
-        <section>
-            
-            <p>this is login</p>
-        </section>
+        <Fade>
+            <LoginForm></LoginForm>
+        </Fade>
     )
 }
 
