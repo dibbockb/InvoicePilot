@@ -55,7 +55,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: ` ${window.location.origin}/dashboard`
+        redirectTo: `${window.location.origin}/dashboard`
       }
     })
 
@@ -66,10 +66,11 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     setLoading(false);
   }
 
-
   if (error) {
     console.log(error);
   }
+
+
   return (
     <div className={cn("flex flex-col gap-6 w-100 py-45 mx-auto animate-accordion-down",)} {...props}>
       <Card className="bg-secondary text-white px-8">
