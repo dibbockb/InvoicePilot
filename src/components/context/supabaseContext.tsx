@@ -31,17 +31,26 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
                 setLoading(false);
             })
 
+        let prevSessionId: string | null = null;
+
         const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+            const currentSessionId = session?.access_token || null;
+
+            if (event === 'SIGNED_IN' && currentSessionId === prevSessionId) {
+                return;
+            }
+
             console.log(`Auth changed :::  ${event}`);
             setSession(session);
             setUser(session?.user ?? null);
             setLoading(false);
+            prevSessionId = currentSessionId;
         });
 
         return () => {
             listener?.subscription.unsubscribe();
         }
-    }, [supabase])
+    }, [])
 
     const value = { supabase, user, session, loading };
 
