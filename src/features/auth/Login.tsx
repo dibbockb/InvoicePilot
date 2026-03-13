@@ -4,7 +4,7 @@ import { Fade } from "react-awesome-reveal"
 const Login = () => {
     return (
         <Fade>
-            <LoginForm></LoginForm>
+            <LoginForm ></LoginForm>
         </Fade>
     )
 }

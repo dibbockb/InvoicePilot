@@ -93,7 +93,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={loading}
-                  className="placeholder:pl-1 placeholder:text-white/70 font-light h-8 transition-all durtation-300 ease-in-out"
+                  className="placeholder:pl-1 placeholder:text-white/70 font-light h-10 transition-all durtation-300 ease-in-out"
                 />
               </Field>
               <Field>
@@ -101,12 +101,12 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <a
                     href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline animate-accordion-down"
+                    className="ml-auto inline-block text-sm  underline-offset-4 hover:underline animate-accordion-down"
                   >
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" value={password}
+                <Input id="password" className=" h-10" type="password" value={password}
                   onChange={(e) => setPassword(e.target.value)} disabled={loading} required />
               </Field>
               <Field className="text-black">

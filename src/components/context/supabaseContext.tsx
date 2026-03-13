@@ -40,7 +40,7 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
                 return;
             }
 
-            console.log(`Auth changed :::  ${event}`);
+            console.log(`Auth state changed :::  ${event}`);
             setSession(session);
             setUser(session?.user ?? null);
             setLoading(false);

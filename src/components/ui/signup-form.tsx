@@ -72,19 +72,16 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
 
     if (error) {
       setError(error.message);
-      console.error("Signup error:", error)
+      toast.warning('Something didn\'t go well.')
+      console.error(error)
       return
     }
 
-    if (data.user && !data.session) {
-      toast.success("Signup successful! Check your email to confirm your account.")
-    } else if (data.session) {
-      toast.success("Account created! Welcome to InvoicePilot.")
-      navigate("/dashboard")
+    if (data.user) {
+      toast.success("Welcome to InvoicePilot!")
+      navigate('/')
     }
   };
-
-
 
   const handleGoogleLogin = async () => {
     setError(null)
@@ -97,17 +94,21 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
     })
 
     if (error) {
+      toast.warning('Something didn\'t go well.')
       console.log(error);
     }
 
     setLoading(false);
   }
 
+  if (error) {
+    toast.warning('Something didn\'t go well.')
+    console.log(error)
+  }
+
   return (
     <Card className="bg-secondary text-white px-8" {...props}>
       <CardHeader className="">
-        <button onClick={() => { toast(`hey`) }}>Hey</button>
-
         <CardTitle className="mx-auto text-2xl ">Create an account</CardTitle>
         <CardDescription className="text-white text-center">
           Enter your information below to create your account

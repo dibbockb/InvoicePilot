@@ -9,6 +9,7 @@ import Trial from "../components/ui/Product/Trial";
 import Demo from "../components/ui/Product/Demo";
 import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
+import Dashboard from "@/components/ui/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -23,5 +24,6 @@ export const router = createBrowserRouter([
         { path: "/register", element: <Register ></Register> },
         ]
     },
+    { path: '/dashboard', element: <Dashboard></Dashboard>, },
     { path: '*', element: <div>404 - Page Not Found</div>, },
 ])

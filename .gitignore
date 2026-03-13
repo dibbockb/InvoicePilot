@@ -10,6 +10,7 @@ sandbox.ts
 node_modules
 dist
 dist-ssr
+user.txt
 *.local
 node_moduels
 # Editor directories and files
