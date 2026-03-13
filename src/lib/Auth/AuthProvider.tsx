@@ -9,8 +9,6 @@ interface AuthProviderProps {
 export default function AuthProvider({ children }: AuthProviderProps) {
 
     const setAuth = useAuthStore((state) => state.setAuth);
-
-
     //reverse enginner this
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => { setAuth(session) });

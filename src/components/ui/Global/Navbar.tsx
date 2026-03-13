@@ -2,15 +2,18 @@ import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { Fade } from "react-awesome-reveal";
 import { toast } from "sonner";
+import { useAuthStore } from "@/lib/Auth/authStore";
+import { supabase } from "@/lib/Auth/supabase";
 
 const Navbar = () => {
+    const { user } = useAuthStore();
 
-
-    const user = true;
     const handleLogout = async () => {
-        
 
-        // await supabase.auth.signOut()
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error(`Error loggin out :::`, error);
+        }
         toast.info(`Logged out!`);
     }
 

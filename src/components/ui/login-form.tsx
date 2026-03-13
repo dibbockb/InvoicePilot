@@ -15,14 +15,14 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
-import { useSupabase } from "../context/supabaseContext"
 import { useState } from "react"
 import Loading from "./Global/Loading"
 import { toast } from "sonner"
+import { supabase } from "@/lib/Auth/supabase"
+
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
-  const { supabase } = useSupabase();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>("");
