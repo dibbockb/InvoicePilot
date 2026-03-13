@@ -24,6 +24,8 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
 
     // ### reverse engineer this
     useEffect(() => {
+
+        //get if user present
         supabase.auth.getSession()
             .then(({ data: { session } }) => {
                 setSession(session);
@@ -39,7 +41,6 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
             if (event === 'SIGNED_IN' && currentSessionId === prevSessionId) {
                 return;
             }
-
             console.log(`Auth state changed :::  ${event}`);
             setSession(session);
             setUser(session?.user ?? null);
@@ -47,6 +48,8 @@ export function SupabaseProvider({ children }: { children: ReactNode }) {
             prevSessionId = currentSessionId;
         });
 
+
+        //clean on unmount
         return () => {
             listener?.subscription.unsubscribe();
         }

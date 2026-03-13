@@ -1,10 +1,20 @@
 import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { Fade } from "react-awesome-reveal";
+import { toast } from "sonner";
+import { useSupabase } from "@/components/context/supabaseContext";
 
 const Navbar = () => {
-    return (
 
+    const { user, supabase } = useSupabase();
+
+    const handleLogout = async () => {
+        
+        await supabase.auth.signOut()
+        toast.info(`Logged out!`);
+    }
+
+    return (
         <Fade>
             <nav className="bg-primary flex px-35 py-5 justify-between items-center transition-all duration-300 ease-in-out">
                 <Link to={"/"} className="flex items-center gap-3 hover:scale-110 transition-all duration-200 ease-in-out">
@@ -14,14 +24,21 @@ const Navbar = () => {
 
                 <div className="items-center gap-2 text-white hidden lg:flex ">
                     <NavLink to={"/features"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-22 h-10 rounded transition-all duration-300 text-center">Features</NavLink >
+                    {user ?
+                        <NavLink to={"/dashboard"} className="hover:bg-accent/80 px-14 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Dashboard</NavLink > :
+                        <NavLink to={"/pricing"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Pricing</NavLink >}
                     <NavLink to={"/solutions"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-25 h-10 rounded transition-all duration-300 text-center">Solutions</NavLink >
-                    <NavLink to={"/pricing"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Pricing</NavLink >
-                    <NavLink to={"/about"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-18 h-10 rounded transition-all duration-300 text-center">About</NavLink >
+
                 </div>
 
                 <div className="flex justify-center items-center gap-3">
-                    <Link to={"/login"} className="text-white h-10 hover:shadow-lg font-medium hover:bg-accent/80 flex justify-center items-center rounded w-18 transition-all duration-300">Log In</Link>
-                    <Link to={"/onboarding"} className=" text-white font-medium shadow-md hover:shadow-lg bg-accent w-37 h-10 flex justify-center items-center rounded hover:bg-accent/80 duration-300">Start Free Trial</Link>
+                    {user ?
+                        <button onClick={handleLogout} className="flex justify-center items-center w-10 hover:bg-accent/25 h-10 rounded-full transition-all durtation-300 ease-in-out">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                        </button> :
+                        <div className="flex gap-3">
+                            <Link to={"/login"} className="text-white h-10 hover:shadow-lg font-medium hover:bg-accent/80 flex justify-center items-center rounded w-18 transition-all duration-300">Log In</Link>
+                            <Link to={"/onboarding"} className=" text-white font-medium shadow-md hover:shadow-lg bg-accent w-37 h-10 flex justify-center items-center rounded hover:bg-accent/80 duration-300">Start Free Trial</Link></div>}
                 </div>
             </nav>
         </Fade>

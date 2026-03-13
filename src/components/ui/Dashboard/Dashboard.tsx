@@ -1,7 +1,7 @@
 
 const Dashboard = () => {
     return (
-        <section>dashboard under construction</section>
+        <section>still working on this</section>
 
     )
 }

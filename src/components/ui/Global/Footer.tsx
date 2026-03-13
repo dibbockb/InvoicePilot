@@ -22,9 +22,9 @@ const Footer = () => {
 
                 {/* footer brand */}
                 <div className="flex flex-col justify-center pr-120">
-                    <div onClick={goToTop} className="flex flex-col w-fit justify-center items-center">
+                    <div onClick={goToTop} className="flex flex-col w-fit justify-center items-center group">
                         <img src="/assets/icon.svg" alt="navbar-icon" className="h-9 w-9 " />
-                        <div className=" text-accent text-2xl font-medium hidden md:block ">InvoicePilot</div>
+                        <div className=" text-accent text-2xl font-medium hidden md:block group-hover:cursor-pointer">InvoicePilot</div>
                     </div>
                     <br />
                     <p className="w-75 text-white/75">Track clients, invoices, profits—all in one sleek dashboard. Automate the boring, do what you love!</p>
@@ -36,7 +36,7 @@ const Footer = () => {
                         <a href="https://www.google.com/search?q=InvoicePilot%20by%20dibbockb%20twitter%20page" target="_blank"><FaXTwitter className="shadow-2xl h-6 w-6 hover:scale-105"></FaXTwitter></a>
                     </div>
                     <br />
-                    <button onClick={goToTop} className="flex text-white/75 max-w-fit gap-2 shadow-md hover:shadow-lg justify-center items-center outline-1 outline-dotted outline-white/20 shadow-2xl rounded-xl w-fit h-10 px-5 hover:bg-accent duration-150 transition-all "> <FaAngleDoubleUp></FaAngleDoubleUp> Back To Top</button>
+                    <button onClick={goToTop} className="flex text-white/75 max-w-fit gap-2 hover:shadow-lg justify-center items-center outline-1 outline-dotted outline-white/20 shadow-2xl rounded-xl w-fit h-10 px-5 hover:bg-accent duration-150 transition-all "> <FaAngleDoubleUp></FaAngleDoubleUp> Back To Top</button>
                 </div>
 
                 {/* footer sitemap */}

@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useSupabase } from "../context/supabaseContext"
 import { useState } from "react"
 import Loading from "./Global/Loading"
+import { toast } from "sonner"
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
@@ -46,7 +47,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       return
     }
 
-    navigate("/profile")
+    navigate("/dashboard")
   }
 
   const handleGoogleLogin = async () => {
@@ -99,12 +100,12 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
               <Field>
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => { toast(`Not yet`) }}
                     className="ml-auto inline-block text-sm  underline-offset-4 hover:underline animate-accordion-down"
                   >
                     Forgot your password?
-                  </a>
+                  </button>
                 </div>
                 <Input id="password" className=" h-10" type="password" value={password}
                   onChange={(e) => setPassword(e.target.value)} disabled={loading} required />
