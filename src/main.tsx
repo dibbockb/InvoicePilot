@@ -3,16 +3,16 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from "react-router-dom";
 import { router } from './router';
-import { SupabaseProvider } from './components/context/supabaseContext';
 import { Toaster } from "@/components/ui/sonner"
+import AuthProvider from './lib/Auth/AuthProvider';
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <SupabaseProvider>
+    <AuthProvider>
       <Toaster />
       <RouterProvider router={router} />
-    </SupabaseProvider>
+    </AuthProvider>
 
   </StrictMode>
 )
