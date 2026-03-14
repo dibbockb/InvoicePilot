@@ -36,18 +36,24 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     setError(null);
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error, data } = await supabase.auth.signInWithPassword({
       email, password
     })
+
     setLoading(false);
 
     if (error) {
       setError(error.message);
-      console.log(error.message);
+      toast.error(error.message);
       return
     }
 
-    navigate("/dashboard")
+    if (data?.session) {
+      const userName = data.session.user.user_metadata?.username || "Pilot"
+      toast.success(`Welcome back, ${userName}!`)
+      navigate("/dashboard")
+    }
+
   }
 
   const handleGoogleLogin = async () => {
@@ -63,12 +69,12 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     if (error) {
       console.log(error);
     }
-
     setLoading(false);
   }
 
   if (error) {
     console.log(error);
+    toast.error(`Something went wrong.`)
   }
 
 

@@ -38,20 +38,18 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
       setError("Please enter a username");
       toast(`Please enter a Name`)
       setLoading(false);
-
       return;
     }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       setLoading(false);
-      toast(`Password do not match!`)
-
+      toast.warning(`Password do not match!`)
       return;
     }
 
     if (password.length < 6) {
-      toast.info("Password must be atleast 6 characters!", { position: "top-center" })
+      toast.info("Password must be atleast 6 characters!")
       setLoading(false);
       return;
     }
@@ -62,7 +60,7 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
       options: {
         emailRedirectTo: `${window.location.origin}/dashboard`,
         data: {
-          username: name.trim().toLowerCase()
+          username: name.trim()
         },
       },
     });
@@ -71,14 +69,14 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
 
     if (error) {
       setError(error.message);
-      toast.warning('Something didn\'t go well.')
+      toast.warning('Something didn\'t go right.')
       console.error(error)
       return
     }
 
     if (data.user) {
       toast.success("Welcome to InvoicePilot!")
-      navigate('/')
+      navigate('/dashboard')
     }
   };
 
@@ -94,15 +92,12 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
 
     if (error) {
       toast.warning('Something didn\'t go well.')
-      console.log(error);
     }
-
     setLoading(false);
   }
 
   if (error) {
     toast.warning('Something didn\'t go well.')
-    console.log(error)
   }
 
   return (
