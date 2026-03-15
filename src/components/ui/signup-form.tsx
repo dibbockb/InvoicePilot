@@ -115,7 +115,13 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
 
               <Input className="placeholder:pl-1 placeholder:text-white/70 font-light " id="name" type="text" placeholder="John Doe" value={name}
-                onChange={(e) => setName(e.target.value)} />
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setName(value.toLowerCase().split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')
+                  );
+                }} />
             </Field>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
