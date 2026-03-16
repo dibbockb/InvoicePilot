@@ -4,11 +4,21 @@ import { Fade } from "react-awesome-reveal";
 import { toast } from "sonner";
 import { useAuthStore } from "@/lib/Auth/authStore";
 import { supabase } from "@/lib/Auth/supabase";
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+import { LayoutDashboard, LogOut, UserRoundCog } from "lucide-react";
 
 const Navbar = () => {
     const { user } = useAuthStore();
 
     const handleLogout = async () => {
+        
         const { error } = await supabase.auth.signOut();
         if (error) {
             console.error(`Error loggin out :::`, error);
@@ -24,26 +34,60 @@ const Navbar = () => {
                     <div className=" text-accent text-2xl font-medium hidden md:block transition-all durtation-300 ease-in-out">InvoicePilot</div>
                 </Link>
 
-                <div className="items-center gap-2 text-white hidden lg:flex ">
+                <div className="items-center gap-2 text-white hidden lg:flex justify-center">
                     <NavLink to={"/features"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-22 h-10 rounded transition-all duration-300 text-center">Features</NavLink >
                     {user ?
                         <NavLink to={"/dashboard"} className="hover:bg-accent/80 px-14 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Dashboard</NavLink > :
                         <NavLink to={"/pricing"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Pricing</NavLink >}
                     <NavLink to={"/solutions"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-25 h-10 rounded transition-all duration-300 text-center">Solutions</NavLink >
-
                 </div>
 
-                <div className="flex justify-center items-center gap-3">
+
+                <div className="">
                     {user ?
-                        <button onClick={handleLogout} className="flex justify-center items-center w-10 hover:bg-accent/25 h-10 rounded-full transition-all durtation-300 ease-in-out">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-                        </button> :
+                        <NavigationMenu>
+                            <NavigationMenuList>
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger className="flex justify-center items-center w-15 h-10 rounded-full transition-all duration-300 ease-in-out bg-[#1E293B] hover:bg-[#1E293B]/40 ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user">
+                                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg>
+                                    </NavigationMenuTrigger>
+
+                                    <NavigationMenuContent className="shadow-md hover:shadow-lg border border-white/10 ">
+                                        <ul className="grid w-55 gap-1 p-2 bg-primary shadow-2xl rounded-md">
+                                            <li className="px-3 py-2 text-white font-semibold border-b border-white/10 mb-1 text-center">
+                                                {user?.user_metadata?.username || "Pilot"}
+                                            </li>
+                                            <li>
+                                                <NavigationMenuLink >
+                                                    <Link to="/dashboard" className="flex items-center gap-2 p-2 text-sm text-white/70 rounded transition-colors hover:bg-accent">
+                                                        <LayoutDashboard size={16} /> Dashboard
+                                                    </Link>
+                                                </NavigationMenuLink>
+                                                <NavigationMenuLink >
+                                                    <Link to="/profile" className="flex items-center gap-2 p-2 text-sm text-white/70 rounded transition-colors hover:bg-accent">
+                                                        <UserRoundCog size={16} /> Profile
+                                                    </Link>
+                                                </NavigationMenuLink>
+
+                                                <NavigationMenuLink >
+                                                    <button className="flex items-center gap-2 p-2 text-sm text-white/70 rounded transition-colors hover:bg-red-400/60 w-full" onClick={handleLogout} > <LogOut size={16} ></LogOut>Log Out</button>
+                                                </NavigationMenuLink>
+
+                                            </li>
+                                        </ul>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                        </NavigationMenu> :
                         <div className="flex gap-3">
                             <Link to={"/login"} className="text-white h-10 hover:shadow-lg font-medium hover:bg-accent/80 flex justify-center items-center rounded w-18 transition-all duration-300">Log In</Link>
                             <Link to={"/onboarding"} className=" text-white font-medium shadow-md hover:shadow-lg bg-accent w-37 h-10 flex justify-center items-center rounded hover:bg-accent/80 duration-300">Start Free Trial</Link></div>}
                 </div>
             </nav>
-        </Fade>
+        </Fade >
     )
 }
 export default Navbar
