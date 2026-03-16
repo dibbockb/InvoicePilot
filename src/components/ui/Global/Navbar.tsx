@@ -9,7 +9,6 @@ const Navbar = () => {
     const { user } = useAuthStore();
 
     const handleLogout = async () => {
-
         const { error } = await supabase.auth.signOut();
         if (error) {
             console.error(`Error loggin out :::`, error);

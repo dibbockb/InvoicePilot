@@ -74,7 +74,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
   if (error) {
     console.log(error);
-    toast.error(`Something went wrong.`)
+    toast.error(error);
   }
 
 

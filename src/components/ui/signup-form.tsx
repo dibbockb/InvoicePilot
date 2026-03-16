@@ -97,7 +97,7 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
   }
 
   if (error) {
-    toast.warning('Something didn\'t go well.')
+    toast.warning(error)
   }
 
   return (
@@ -157,7 +157,7 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
 
               </Field>
               <FieldDescription className="text-white/60 font-light">
-                Must be at least 8 characters long.
+                Must be at least 6 characters long.
               </FieldDescription>
             </Field>
             <FieldGroup>
