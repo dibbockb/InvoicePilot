@@ -19,6 +19,7 @@ import { useState } from "react";
 const Navbar = () => {
     const [isOpen, setisOpen] = useState(false)
 
+
     const { user } = useAuthStore();
     const handleLogout = async () => {
         const { error } = await supabase.auth.signOut();
@@ -29,8 +30,7 @@ const Navbar = () => {
     }
 
     return (
-        <Fade>
-            <nav className="bg-primary flex px-4 md:px-10 lg:px-30 py-5 justify-between items-center transition-all duration-300 ease-in-out">
+            <nav className="relative bg-primary flex px-6 md:px-15 lg:px-34 py-5 justify-between items-center transition-all duration-300 ease-in-out">
                 <Link to={"/"} className="flex items-center gap-3 hover:scale-110 transition-all duration-200 ease-in-out">
                     <img src="/assets/icon.svg" alt="navbar-icon" className="h-10 w-10 " />
                     <div className=" text-accent text-2xl font-medium hidden md:block transition-all durtation-300 ease-in-out">InvoicePilot</div>
@@ -46,11 +46,13 @@ const Navbar = () => {
 
 
                 <div className="flex gap-3">
-                    <button className="md:hidden">
+                    <button className="md:hidden text-neutral-300"
+                        onClick={() => setisOpen(!isOpen)
+                        }>
                         <Menu></Menu>
                     </button>
                     {user ?
-                        <NavigationMenu>
+                        <NavigationMenu className="hidden md:block">
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className="flex justify-center items-center w-15 h-10 rounded-full transition-all duration-300 ease-in-out bg-[#1E293B] hover:bg-[#1E293B]/40 ">
@@ -87,12 +89,49 @@ const Navbar = () => {
                                 </NavigationMenuItem>
                             </NavigationMenuList>
                         </NavigationMenu> :
-                        <div className="flex gap-3">
+                        <div className="hidden md:flex gap-3">
                             <Link to={"/login"} className="text-white h-10 hover:shadow-lg font-medium hover:bg-accent/80 flex justify-center items-center rounded w-18 transition-all duration-300">Log In</Link>
                             <Link to={"/onboarding"} className=" text-white font-medium shadow-md hover:shadow-lg bg-accent w-37 h-10 flex justify-center items-center rounded hover:bg-accent/80 duration-300">Start Free Trial</Link></div>}
                 </div>
+
+                {isOpen && (
+                    <div className="absolute top-20 left-0 w-full bg-accent text-white rounded-2xl flex flex-col items-center gap-4 py-5 md:hidden z-50 transition-all duration-300 ease-in-out">
+
+                        <NavLink className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded"
+                            onClick={() => setisOpen(false)}
+                            to="/features">Features</NavLink>
+                        
+
+                        {user ? (
+                            <NavLink className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded"
+                                onClick={() => setisOpen(false)}
+                                to="/dashboard">Dashboard</NavLink>
+                        ) : (
+                            <NavLink className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded"
+                                onClick={() => setisOpen(false)}
+                                to="/pricing">Pricing</NavLink>
+                        )}
+
+                        <NavLink className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded"
+                            onClick={() => setisOpen(false)}
+                            to="/solutions">Solutions</NavLink>
+
+                        {user ? (
+                            <button className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded" onClick={handleLogout}>Logout</button>
+                        ) : (
+                            <>
+                                <Link className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded"
+                                    onClick={() => setisOpen(false)}
+                                    to="/onboarding">Start Free Trial</Link>
+                                <Link className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded"
+                                    onClick={() => setisOpen(false)}
+                                    to="/login">Login</Link>
+                            </>
+                        )}
+
+                    </div>
+                )}
             </nav>
-        </Fade >
     )
 }
 export default Navbar
