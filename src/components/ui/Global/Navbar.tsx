@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { Fade } from "react-awesome-reveal";
+import { Menu } from "lucide-react";
 import { toast } from "sonner";
 import { useAuthStore } from "@/lib/Auth/authStore";
 import { supabase } from "@/lib/Auth/supabase";
@@ -13,12 +14,13 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { LayoutDashboard, LogOut, UserRoundCog } from "lucide-react";
+import { useState } from "react";
 
 const Navbar = () => {
-    const { user } = useAuthStore();
+    const [isOpen, setisOpen] = useState(false)
 
+    const { user } = useAuthStore();
     const handleLogout = async () => {
-        
         const { error } = await supabase.auth.signOut();
         if (error) {
             console.error(`Error loggin out :::`, error);
@@ -28,13 +30,13 @@ const Navbar = () => {
 
     return (
         <Fade>
-            <nav className="bg-primary flex px-35 py-5 justify-between items-center transition-all duration-300 ease-in-out">
+            <nav className="bg-primary flex px-4 md:px-10 lg:px-30 py-5 justify-between items-center transition-all duration-300 ease-in-out">
                 <Link to={"/"} className="flex items-center gap-3 hover:scale-110 transition-all duration-200 ease-in-out">
-                    <img src="/assets/icon.svg" alt="navbar-icon" className="h-9 w-9 " />
+                    <img src="/assets/icon.svg" alt="navbar-icon" className="h-10 w-10 " />
                     <div className=" text-accent text-2xl font-medium hidden md:block transition-all durtation-300 ease-in-out">InvoicePilot</div>
                 </Link>
 
-                <div className="items-center gap-2 text-white hidden lg:flex justify-center">
+                <div className="hidden items-center gap-2 text-white md:flex justify-around">
                     <NavLink to={"/features"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-22 h-10 rounded transition-all duration-300 text-center">Features</NavLink >
                     {user ?
                         <NavLink to={"/dashboard"} className="hover:bg-accent/80 px-14 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Dashboard</NavLink > :
@@ -43,7 +45,10 @@ const Navbar = () => {
                 </div>
 
 
-                <div className="">
+                <div className="flex gap-3">
+                    <button className="md:hidden">
+                        <Menu></Menu>
+                    </button>
                     {user ?
                         <NavigationMenu>
                             <NavigationMenuList>
