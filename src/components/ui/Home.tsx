@@ -25,9 +25,9 @@ const Home = () => {
     }, []); // ← empty array = run once on mount
 
     return (
-        <section>
-            <Hero  />
-        </section>
+        <main>
+            <Hero />
+        </main>
     );
 };
 
