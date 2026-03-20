@@ -24,7 +24,7 @@ const Hero = () => {
                 </div>
 
 
-                <p className="text-subtle max-w-120 pt-8 px-5 md:px-0">
+                <p className="text-subtle max-w-120 pt-8 px-5 md:px-0 md:text-xl md:max-w-150">
                     Track clients, invoices, and profits in one powerful dashboard <br />
                     designed for the modern freelancer.  Automate the boring stuff
                     and focus on what you love!
@@ -33,12 +33,12 @@ const Hero = () => {
                 <br />
 
                 <div className="flex flex-col md:flex-row gap-4 text-center items-center">
-                    <Link to={"/onboarding"} className="flex justify-center items-center gap-2 text-[white] bg-accent hover:bg-accent/80 transition-all duration-300 w-fit h-15 px-5 rounded-xl font-medium shadow-md hover:shadow-lg">Start Free Trial <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <Link to={"/onboarding"} className="flex justify-center items-center gap-2 text-[white] bg-accent hover:bg-accent/80 transition-all duration-300 lg:w-45 h-15 px-5 rounded-xl font-medium shadow-md hover:shadow-lg">Start Free Trial <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z" fill="white" />
                     </svg>
                     </Link>
 
-                    <Link to={"/demo"} className="flex justify-center items-center gap-2 text-[white] bg-[#1e293b] hover:bg-[#1e293b]/80 w-fit h-15 px-5 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">Watch Live Demo <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <Link to={"/demo"} className="flex justify-center items-center gap-2 text-[white] bg-[#1e293b] hover:bg-[#1e293b]/80 lg:w-50 h-15 px-5 rounded-xl font-medium shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">Watch Live Demo <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.5 14.5L14.5 10L7.5 5.5V14.5ZM10 20C8.61667 20 7.31667 19.7375 6.1 19.2125C4.88333 18.6875 3.825 17.975 2.925 17.075C2.025 16.175 1.3125 15.1167 0.7875 13.9C0.2625 12.6833 0 11.3833 0 10C0 8.61667 0.2625 7.31667 0.7875 6.1C1.3125 4.88333 2.025 3.825 2.925 2.925C3.825 2.025 4.88333 1.3125 6.1 0.7875C7.31667 0.2625 8.61667 0 10 0C11.3833 0 12.6833 0.2625 13.9 0.7875C15.1167 1.3125 16.175 2.025 17.075 2.925C17.975 3.825 18.6875 4.88333 19.2125 6.1C19.7375 7.31667 20 8.61667 20 10C20 11.3833 19.7375 12.6833 19.2125 13.9C18.6875 15.1167 17.975 16.175 17.075 17.075C16.175 17.975 15.1167 18.6875 13.9 19.2125C12.6833 19.7375 11.3833 20 10 20ZM10 18C12.2333 18 14.125 17.225 15.675 15.675C17.225 14.125 18 12.2333 18 10C18 7.76667 17.225 5.875 15.675 4.325C14.125 2.775 12.2333 2 10 2C7.76667 2 5.875 2.775 4.325 4.325C2.775 5.875 2 7.76667 2 10C2 12.2333 2.775 14.125 4.325 15.675C5.875 17.225 7.76667 18 10 18Z" fill="#F1F5F9" />
                     </svg>
                     </Link>
@@ -53,12 +53,13 @@ const Hero = () => {
                     </div>
                 </div>
             </section>
+
             <div className="flex flex-col justify-center items-center py-10  bg-secondary ">
                 <p className="text-subtle text-center tracking-wide text-xl font-medium">Trusted by 10,000+ Freelancers & Remote Teams</p>
                 {/* //companies */}
                 <br />
-                <Marquee pauseOnHover >
-                    <div className="flex overflow-x-auto gap-20 pb-4 snap-x" >
+                <Marquee pauseOnHover speed={20}>
+                    <div className="flex overflow-x-auto gap-75 pb-4 snap-x" >
                         <br />
                         <div className="flex gap-3 items-center">
                             <svg width="30" height="30" viewBox="0 0 24 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,83 +106,83 @@ const Hero = () => {
 
             <div className="bg-primary flex flex-col items-center">
 
-                <h3 className="text-center text-[4rem] font-medium pt-10">Everything you need to grow</h3>
-                <p className="text-subtle text-xl w-125 text-center pt-5">Focus on your craft while we handle the heavy lifting of running a freelance
+                <h3 className="text-center text-[clamp(2.5rem,6vw,4.8rem)] font-medium">Everything you need to grow</h3>
+                <p className="text-subtle text-xl max-w-120 px-10 text-center pt-5">Focus on your craft while we handle the heavy lifting of running a freelance
                     business.</p>
 
-                <div className="grid grid-rows-2 grid-cols-3 gap-8 py-15">
+                <div className="grid grid-rows-2 grid-cols-1 gap-8 py-15 px-5 text-center md:grid-cols-2 lg:grid-cols-3">
                     {/* //card */}
-                    <div className="bg-secondary w-fit py-10 px-10   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
+                    <div className="bg-secondary py-10 px-10 flex flex-col items-center  rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="8" fill="#2B8CEE" fill-opacity="0.1" />
                             <path d="M13 32V29.2C13 28.6333 13.1458 28.1125 13.4375 27.6375C13.7292 27.1625 14.1167 26.8 14.6 26.55C15.6333 26.0333 16.6833 25.6458 17.75 25.3875C18.8167 25.1292 19.9 25 21 25C22.1 25 23.1833 25.1292 24.25 25.3875C25.3167 25.6458 26.3667 26.0333 27.4 26.55C27.8833 26.8 28.2708 27.1625 28.5625 27.6375C28.8542 28.1125 29 28.6333 29 29.2V32H13ZM31 32V29C31 28.2667 30.7958 27.5625 30.3875 26.8875C29.9792 26.2125 29.4 25.6333 28.65 25.15C29.5 25.25 30.3 25.4208 31.05 25.6625C31.8 25.9042 32.5 26.2 33.15 26.55C33.75 26.8833 34.2083 27.2542 34.525 27.6625C34.8417 28.0708 35 28.5167 35 29V32H31ZM21 24C19.9 24 18.9583 23.6083 18.175 22.825C17.3917 22.0417 17 21.1 17 20C17 18.9 17.3917 17.9583 18.175 17.175C18.9583 16.3917 19.9 16 21 16C22.1 16 23.0417 16.3917 23.825 17.175C24.6083 17.9583 25 18.9 25 20C25 21.1 24.6083 22.0417 23.825 22.825C23.0417 23.6083 22.1 24 21 24ZM31 20C31 21.1 30.6083 22.0417 29.825 22.825C29.0417 23.6083 28.1 24 27 24C26.8167 24 26.5833 23.9792 26.3 23.9375C26.0167 23.8958 25.7833 23.85 25.6 23.8C26.05 23.2667 26.3958 22.675 26.6375 22.025C26.8792 21.375 27 20.7 27 20C27 19.3 26.8792 18.625 26.6375 17.975C26.3958 17.325 26.05 16.7333 25.6 16.2C25.8333 16.1167 26.0667 16.0625 26.3 16.0375C26.5333 16.0125 26.7667 16 27 16C28.1 16 29.0417 16.3917 29.825 17.175C30.6083 17.9583 31 18.9 31 20ZM15 30H27V29.2C27 29.0167 26.9542 28.85 26.8625 28.7C26.7708 28.55 26.65 28.4333 26.5 28.35C25.6 27.9 24.6917 27.5625 23.775 27.3375C22.8583 27.1125 21.9333 27 21 27C20.0667 27 19.1417 27.1125 18.225 27.3375C17.3083 27.5625 16.4 27.9 15.5 28.35C15.35 28.4333 15.2292 28.55 15.1375 28.7C15.0458 28.85 15 29.0167 15 29.2V30ZM21 22C21.55 22 22.0208 21.8042 22.4125 21.4125C22.8042 21.0208 23 20.55 23 20C23 19.45 22.8042 18.9792 22.4125 18.5875C22.0208 18.1958 21.55 18 21 18C20.45 18 19.9792 18.1958 19.5875 18.5875C19.1958 18.9792 19 19.45 19 20C19 20.55 19.1958 21.0208 19.5875 21.4125C19.9792 21.8042 20.45 22 21 22Z" fill="#2B8CEE" />
                         </svg>
                         <br />
                         <h6 className="text-[1.3rem] font-medium">Client Management</h6>
-                        <p className="text-subtle font-medium pt-2 w-75">Keep all client details, communication
+                        <p className="text-subtle font-medium pt-2 max-w-65">Keep all client details, communication
                             history, and contracts in one secure vault.</p>
                     </div>
 
                     {/* //card */}
-                    <div className="bg-secondary w-fit py-10 px-10   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
+                    <div className="bg-secondary py-10 px-10 flex flex-col items-center  rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="8" fill="#2B8CEE" fill-opacity="0.1" />
                             <path d="M28.4 33.5L27 32.1L28.575 30.5L27 28.925L28.4 27.5L30 29.1L31.575 27.5L33 28.925L31.4 30.5L33 32.1L31.575 33.5L30 31.925L28.4 33.5ZM18 31.5C18.2833 31.5 18.5208 31.4042 18.7125 31.2125C18.9042 31.0208 19 30.7833 19 30.5C19 30.2167 18.9042 29.9792 18.7125 29.7875C18.5208 29.5958 18.2833 29.5 18 29.5C17.7167 29.5 17.4792 29.5958 17.2875 29.7875C17.0958 29.9792 17 30.2167 17 30.5C17 30.7833 17.0958 31.0208 17.2875 31.2125C17.4792 31.4042 17.7167 31.5 18 31.5ZM18 33.5C17.1667 33.5 16.4583 33.2083 15.875 32.625C15.2917 32.0417 15 31.3333 15 30.5C15 29.6667 15.2917 28.9583 15.875 28.375C16.4583 27.7917 17.1667 27.5 18 27.5C18.6167 27.5 19.1792 27.6708 19.6875 28.0125C20.1958 28.3542 20.5667 28.8167 20.8 29.4C21.45 29.2167 21.9792 28.8583 22.3875 28.325C22.7958 27.7917 23 27.1833 23 26.5V22.5C23 21.1167 23.4875 19.9375 24.4625 18.9625C25.4375 17.9875 26.6167 17.5 28 17.5H29.15L27.575 15.925L29 14.5L33 18.5L29 22.5L27.575 21.1L29.15 19.5H28C27.1667 19.5 26.4583 19.7917 25.875 20.375C25.2917 20.9583 25 21.6667 25 22.5V26.5C25 27.7167 24.6083 28.7875 23.825 29.7125C23.0417 30.6375 22.05 31.2083 20.85 31.425C20.65 32.0417 20.2875 32.5417 19.7625 32.925C19.2375 33.3083 18.65 33.5 18 33.5ZM16.4 21.5L15 20.1L16.575 18.5L15 16.925L16.4 15.5L18 17.1L19.575 15.5L21 16.925L19.4 18.5L21 20.1L19.575 21.5L18 19.925L16.4 21.5Z" fill="#2B8CEE" />
                         </svg>
                         <br />
                         <h6 className="text-[1.3rem] font-medium">Project Tracking</h6>
-                        <p className="text-subtle font-medium pt-2 w-75">Manage multiple projects with milestones,
+                        <p className="text-subtle font-medium pt-2 max-w-65">Manage multiple projects with milestones,
                             deadlines, and time-tracking features built-
                             in.</p>
                     </div>
 
                     {/* //card */}
-                    <div className="bg-secondary w-fit py-10 px-10   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
+                    <div className="bg-secondary py-10 px-10 flex flex-col items-center   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="8" fill="#2B8CEE" fill-opacity="0.1" />
                             <path d="M20 30H28V28H20V30ZM20 26H28V24H20V26ZM18 34C17.45 34 16.9792 33.8042 16.5875 33.4125C16.1958 33.0208 16 32.55 16 32V16C16 15.45 16.1958 14.9792 16.5875 14.5875C16.9792 14.1958 17.45 14 18 14H26L32 20V32C32 32.55 31.8042 33.0208 31.4125 33.4125C31.0208 33.8042 30.55 34 30 34H18ZM25 21V16H18V32H30V21H25ZM18 16V21V16V21V32V16Z" fill="#2B8CEE" />
                         </svg>
                         <br />
                         <h6 className="text-[1.3rem] font-medium">Smart Invoicing</h6>
-                        <p className="text-subtle font-medium pt-2 w-75">Create professional, branded invoices in
+                        <p className="text-subtle font-medium pt-2 max-w-65">Create professional, branded invoices in
                             seconds. Auto-send recurring bills to
                             regular clients.</p>
                     </div>
 
                     {/* //card */}
-                    <div className="bg-secondary w-fit py-10 px-10   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
+                    <div className="bg-secondary py-10 px-10 flex flex-col items-center   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="8" fill="#2B8CEE" fill-opacity="0.1" />
                             <path d="M26 25C25.1667 25 24.4583 24.7083 23.875 24.125C23.2917 23.5417 23 22.8333 23 22C23 21.1667 23.2917 20.4583 23.875 19.875C24.4583 19.2917 25.1667 19 26 19C26.8333 19 27.5417 19.2917 28.125 19.875C28.7083 20.4583 29 21.1667 29 22C29 22.8333 28.7083 23.5417 28.125 24.125C27.5417 24.7083 26.8333 25 26 25ZM19 28C18.45 28 17.9792 27.8042 17.5875 27.4125C17.1958 27.0208 17 26.55 17 26V18C17 17.45 17.1958 16.9792 17.5875 16.5875C17.9792 16.1958 18.45 16 19 16H33C33.55 16 34.0208 16.1958 34.4125 16.5875C34.8042 16.9792 35 17.45 35 18V26C35 26.55 34.8042 27.0208 34.4125 27.4125C34.0208 27.8042 33.55 28 33 28H19ZM21 26H31C31 25.45 31.1958 24.9792 31.5875 24.5875C31.9792 24.1958 32.45 24 33 24V20C32.45 20 31.9792 19.8042 31.5875 19.4125C31.1958 19.0208 31 18.55 31 18H21C21 18.55 20.8042 19.0208 20.4125 19.4125C20.0208 19.8042 19.55 20 19 20V24C19.55 24 20.0208 24.1958 20.4125 24.5875C20.8042 24.9792 21 25.45 21 26ZM32 32H15C14.45 32 13.9792 31.8042 13.5875 31.4125C13.1958 31.0208 13 30.55 13 30V19H15V30H32V32ZM19 26V18V26Z" fill="#2B8CEE" />
                         </svg>
                         <br />
                         <h6 className="text-[1.3rem] font-medium">Payment Monitoring</h6>
-                        <p className="text-subtle font-medium pt-2 w-75">Get notified when invoices are viewed and
+                        <p className="text-subtle font-medium pt-2 max-w-65">Get notified when invoices are viewed and
                             paid. Support for 100+ global currencies..</p>
                     </div>
 
                     {/* //card */}
-                    <div className="bg-secondary w-fit py-10 px-10   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
+                    <div className="bg-secondary py-10 px-10 flex flex-col items-center   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="8" fill="#2B8CEE" fill-opacity="0.1" />
                             <path d="M15.625 26.525L14 25.35L19 17.35L22 20.85L26 14.35L29 18.85L32.375 13.5L34 14.675L29.05 22.525L26.075 18.05L22.275 24.225L19.25 20.7L15.625 26.525ZM27.5 30.5C28.2 30.5 28.7917 30.2583 29.275 29.775C29.7583 29.2917 30 28.7 30 28C30 27.3 29.7583 26.7083 29.275 26.225C28.7917 25.7417 28.2 25.5 27.5 25.5C26.8 25.5 26.2083 25.7417 25.725 26.225C25.2417 26.7083 25 27.3 25 28C25 28.7 25.2417 29.2917 25.725 29.775C26.2083 30.2583 26.8 30.5 27.5 30.5ZM32.6 34.5L29.9 31.8C29.55 32.0333 29.1708 32.2083 28.7625 32.325C28.3542 32.4417 27.9333 32.5 27.5 32.5C26.25 32.5 25.1875 32.0625 24.3125 31.1875C23.4375 30.3125 23 29.25 23 28C23 26.75 23.4375 25.6875 24.3125 24.8125C25.1875 23.9375 26.25 23.5 27.5 23.5C28.75 23.5 29.8125 23.9375 30.6875 24.8125C31.5625 25.6875 32 26.75 32 28C32 28.4333 31.9417 28.8542 31.825 29.2625C31.7083 29.6708 31.5333 30.05 31.3 30.4L34 33.1L32.6 34.5Z" fill="#2B8CEE" />
                         </svg>
                         <br />
                         <h6 className="text-[1.3rem] font-medium">Income Analytics</h6>
-                        <p className="text-subtle font-medium pt-2 w-75">Visualize your earnings with intuitive charts.
+                        <p className="text-subtle font-medium pt-2 max-w-65">Visualize your earnings with intuitive charts.
                             See exactly where your money is coming
                             from.</p>
                     </div>
 
                     {/* //card */}
-                    <div className="bg-secondary w-fit py-10 px-10   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
+                    <div className="bg-secondary py-10 px-10 flex flex-col items-center   rounded-xl outline-1 outline-subtle/40 shadow-xl hover:outline-accent/80 duration-300 transition-all">
                         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="48" height="48" rx="8" fill="#2B8CEE" fill-opacity="0.1" />
                             <path d="M15.4 30L14 28.6L21.4 21.15L25.4 25.15L30.6 20H28V18H34V24H32V21.4L25.4 28L21.4 24L15.4 30Z" fill="#2B8CEE" />
                         </svg>
                         <br />
                         <h6 className="text-[1.3rem] font-medium">Profit Trends</h6>
-                        <p className="text-subtle font-medium pt-2 w-75">Track your business growth over time.
+                        <p className="text-subtle font-medium pt-2 max-w-65">Track your business growth over time.
                             Identify your most profitable service
                             offerings.</p>
                     </div>
@@ -189,12 +190,12 @@ const Hero = () => {
 
             </div>
 
-            <div className="flex items-center px-35 pr-18 pt-10">
-                <div className="flex flex-col justify-between items-start ">
-                    <h3 className="text-[4rem] font-medium leading-18">Your entire office, <span className="text-blue-500">In One
+            <div className="flex justify-center items-center md:flex flex-col lg:flex-row lg:px-20 lg:">
+                <div className="flex flex-col justify-between items-center md: ">
+                    <h3 className="text-[clamp(2.5rem,6vw,4.8rem)] text-center font-medium lg:leading-22">Your entire office, <span className="text-blue-500">In One
                         Place!</span></h3>
 
-                    <p className="w-140 text-subtle font-medium text-xl pt-8">Stop jumping between tools. InvoicePilot brings together everything
+                    <p className="max-w-120 pt-8 px-5 md:px-0 md:text-xl md:max-w-150 text-center">Stop jumping between tools. InvoicePilot brings together everything
                         from lead generation to tax reporting in a clean, unified interface.</p>
                     <div className="flex flex-col pt-5">
                         <div><div className="flex gap-2 items-center">
@@ -225,23 +226,23 @@ const Hero = () => {
                         </div></div>
                 </div>
 
-                <img src="assets/dash-preview.png" alt="features-dashboard-preview" className="h-100% w-250 " />
+                <img src="assets/dash-preview.png" alt="features-dashboard-preview" className="h-100% max-w-220 hidden md:block pt-10" />
             </div>
 
             {/* cta */}
-            <div className="bg-[#2b8cee] rounded-2xl flex flex-col items-center text-center px-25 py-25 w-fit justify-self-center shadow-md hover:shadow-lg">
-                <h1 className="text-white text-[4rem] font-medium leading-18 ">Ready to send your first invoice?</h1>
+            <div className="bg-[#2b8cee] rounded-2xl flex flex-col items-center text-center px-10 md:px-45 py-25 justify-self-center shadow-md hover:shadow-lg">
+                <h1 className="text-white text-[clamp(2.5rem,6vw,3.5rem)] font-medium md:leading-16 max-w-80 md:max-w-125 lg:max-w-full ">Ready to send your first invoice?</h1>
 
-                <p className="text-white text-center w-150 font-medium text-xl pt-3">Join over 10,000 freelancers who are building more profitable, less
+                <p className="w-80 pt-8 px-5 md:px-0 md:text-xl md:w-150 text-center">Join over 10,000 freelancers who are building more profitable, less
                     stressful businesses with InvoicePilot.</p>
 
-                <div className="flex gap-5 pt-6">
-                    <Link to={"/onboarding"} className="flex justify-center items-center gap-2 text-black bg-white hover:bg-white/80 transition-all duration-300 w-fit h-15 px-5 outline-1 outline-white  rounded-xl font-medium shadow-md hover:shadow-lg">Create Free Invoice<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-5 pt-6">
+                    <Link to={"/onboarding"} className="flex justify-center items-center gap-2 text-black bg-white hover:bg-white/80 transition-all duration-300 w-53 h-15 px-5 outline-1 outline-white  rounded-xl font-medium shadow-md hover:shadow-lg">Create Free Invoice<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.175 9H0V7H12.175L6.575 1.4L8 0L16 8L8 16L6.575 14.6L12.175 9Z" fill="black" />
                     </svg>
                     </Link>
 
-                    <Link to={"/demo"} className="flex justify-center items-center gap-2 bg-[#4097f0] outline-1 outline-white hover:bg-white duration-500 ease-in-out w-fit h-15 px-5 rounded-xl text-white font-medium hover:text-black shadow-md hover:shadow-lg transition-all ">Schedule a Demo
+                    <Link to={"/demo"} className="flex justify-center items-center gap-2 bg-[#4097f0] outline-1 outline-white hover:bg-white duration-500 ease-in-out w-53 h-15 px-5 rounded-xl text-white font-medium hover:text-black shadow-md hover:shadow-lg transition-all ">Schedule a Demo
                     </Link>
                 </div>
             </div>
