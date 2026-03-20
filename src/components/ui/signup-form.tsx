@@ -19,7 +19,7 @@ import { toast } from "sonner"
 import Loading from "./Global/Loading"
 import { supabase } from "@/lib/Auth/supabase"
 
-export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
+export function SignupForm() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -101,7 +101,7 @@ export function SignupForm({ ...props }: React.FormEvent<HTMLFormElement>) {
   }
 
   return (
-    <Card className="bg-secondary text-white px-8" {...props}>
+    <Card className="bg-secondary text-white px-8">
       <CardHeader className="">
         <CardTitle className="mx-auto text-2xl ">Create an account</CardTitle>
         <CardDescription className="text-white text-center">

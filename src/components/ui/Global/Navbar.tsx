@@ -29,14 +29,16 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="relative bg-primary flex px-6 md:px-15 lg:px-34 py-5 justify-between items-center transition-all duration-300 ease-in-out">
-            <Link to={"/"} className="flex items-center gap-3 hover:scale-110 transition-all duration-200 ease-in-out">
-                <img src="/assets/icon.svg" alt="navbar-icon" className="h-10 w-10 " />
-                <div className=" text-accent text-2xl font-medium hidden md:block transition-all durtation-300 ease-in-out">InvoicePilot</div>
-            </Link>
+        <nav className="relative bg-primary px-6 md:px-12 lg:px-40 py-5 grid grid-cols-3 items-center gap-4">
+            <div className="justify-self-start">
+                <Link to="/" className="flex items-center gap-3 hover:scale-110 transition-all duration-200">
+                    <img src="/assets/icon.svg" alt="navbar-icon" className="h-10 w-10" />
+                    <div className="text-accent text-2xl font-medium hidden md:block">InvoicePilot</div>
+                </Link>
+            </div>
 
-            <div className="hidden items-center gap-2 text-white md:flex justify-around">
-                <NavLink to={"/features"} className="hover:bg-accent/80 flex font-medium justify-center items-center px-2 h-10 rounded transition-all duration-300 text-center">Features</NavLink >
+            <div className="hidden md:flex items-center justify-center gap-2 text-white  ">
+                <NavLink to={"/features"} className="hover:bg-accent/80 flex font-medium justify-center items-center px-3 h-10 rounded transition-all duration-300 text-center">Features</NavLink >
                 {user ?
                     <NavLink to={"/dashboard"} className="hover:bg-accent/80 px-14 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Dashboard</NavLink > :
                     <NavLink to={"/pricing"} className="hover:bg-accent/80 flex font-medium justify-center items-center w-20 h-10 rounded transition-all duration-300 text-center">Pricing</NavLink >}
@@ -44,7 +46,7 @@ const Navbar = () => {
             </div>
 
 
-            <div className="flex gap-3">
+            <div className="justify-self-end flex items-center gap-3">
                 <button className="md:hidden text-neutral-300"
                     onClick={() => setisOpen(!isOpen)
                     }>
