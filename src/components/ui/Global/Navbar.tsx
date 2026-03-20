@@ -29,7 +29,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="relative bg-primary px-6 md:px-12 lg:px-40 py-5 grid grid-cols-3 items-center gap-4">
+        <nav className="relative bg-primary px-6 md:px-12 lg:px-40 py-5 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
             <div className="justify-self-start">
                 <Link to="/" className="flex items-center gap-3 hover:scale-110 transition-all duration-200">
                     <img src="/assets/icon.svg" alt="navbar-icon" className="h-10 w-10" />
@@ -46,12 +46,13 @@ const Navbar = () => {
             </div>
 
 
-            <div className="justify-self-end flex items-center gap-3">
+            <div className="justify-self-end">
                 <button className="md:hidden text-neutral-300"
                     onClick={() => setisOpen(!isOpen)
                     }>
                     <Menu></Menu>
                 </button>
+
                 {user ?
                     <NavigationMenu className="hidden md:block">
                         <NavigationMenuList>
@@ -90,13 +91,15 @@ const Navbar = () => {
                             </NavigationMenuItem>
                         </NavigationMenuList>
                     </NavigationMenu> :
+
                     <div className="hidden md:flex gap-3">
                         <Link to={"/login"} className="text-white h-10 hover:shadow-lg font-medium hover:bg-accent/80 flex justify-center items-center rounded w-18 transition-all duration-300">Log In</Link>
-                        <Link to={"/onboarding"} className=" text-white font-medium shadow-md hover:shadow-lg bg-accent w-37 h-10 flex justify-center items-center rounded hover:bg-accent/80 duration-300">Start Free Trial</Link></div>}
+                        <Link to={"/onboarding"} className=" text-white font-medium shadow-md hover:shadow-lg bg-accent w-37 h-10 flex justify-center items-center rounded hover:bg-accent/80 duration-300">Start Free Trial</Link>
+                    </div>}
             </div>
 
             {isOpen && (
-                <div className="absolute top-20 left-0 w-full bg-accent text-white rounded-2xl flex flex-col items-center gap-4 py-5 md:hidden z-50 transition-all duration-300 ease-in-out">
+                <div className="absolute top-50 left-0 w-full bg-accent text-white rounded-2xl flex flex-col items-center gap-4 py-5 md:hidden z-50 transition-all duration-300 ease-in-out">
 
                     <NavLink className="text-white cursor-pointer hover:bg-primary/50 w-full flex text-center items-center justify-center h-8 rounded"
                         onClick={() => setisOpen(false)}

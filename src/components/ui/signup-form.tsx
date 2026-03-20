@@ -101,7 +101,7 @@ export function SignupForm() {
   }
 
   return (
-    <Card className="bg-secondary text-white px-8">
+    <Card className="bg-secondary text-white px-8 py-10 w-90 md:w-100 mx-auto">
       <CardHeader className="">
         <CardTitle className="mx-auto text-2xl ">Create an account</CardTitle>
         <CardDescription className="text-white text-center">
@@ -169,7 +169,7 @@ export function SignupForm() {
                   Sign up with Google
                 </Button>
                 <FieldDescription className="px-6 text-center text-white">
-                  Already have an account? <Link className="text-white/80 hover:text-blue-400" to="/login">Sign in</Link>
+                  Already have an account? <Link className="text-white/80 hover:text-accent transition-all duration-200 ease-in-out" to="/login">Log in</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

@@ -55,12 +55,12 @@ const Footer = () => {
                 {/* footer sub */}
                 <section className="flex flex-col justify-center items-center md:items-start gap-2">
                     <p className="pl-2">Subscribe to our newsletter</p>
-                    <input type="text" placeholder="Your e-mail" className="bg-white/10 rounded-3xl  shadow-md hover:shadow-lg h-10 max-w-75 lg:w-85 pl-5 transition-all duration-300" />
+                    <input type="text" placeholder="Your e-mail" className="bg-white/10 rounded-3xl active:ring-1 shadow-md hover:shadow-lg h-10 max-w-75 lg:w-85 pl-5 transition-all duration-300" />
                     <button onClick={handleSubscribe} className="text-white bg-accent hover:brightness-85 transition-all shadow-md hover:shadow-lg duration-300 h-8 md:h-10 px-5 rounded-xl ">Subscribe</button>
                 </section>
             </div>
 
-            <p className="text-white text-center py-2 bg-[#192b3da2]/20 shadow-md hover:shadow-lg max-w-[75%] mx-auto text-[12px]">© 2026 - InvoicePilot. Created by <a href="https://www.dibbockb.com/" target="_blank" className="text-accent"> [.dibbockb]</a></p>
+            <p className="text-white text-center py-2 bg-[#192b3da2]/20 shadow-md hover:shadow-lg max-w-[75%] mx-auto text-[12px]">© 2026 - InvoicePilot. Created by <a href="https://www.dibbockb.com/" target="_blank" className="text-accent hover:brightness-75 transition-all duration-300 ease-in-out"> [.dibbockb]</a></p>
         </footer>
     )
 }

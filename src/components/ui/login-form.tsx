@@ -79,11 +79,11 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
 
   return (
-    <div className={cn("flex flex-col gap-6 w-100 py-45 mx-auto animate-accordion-down",)} {...props}>
+    <div className={cn("flex flex-col w-85 gap-6 md:w-100 py-45 mx-auto ",)} {...props}>
       <Card className="bg-secondary text-white px-8">
         <CardHeader className="pb-5 pt-5">
           <CardTitle className="mx-auto text-2xl ">Login to InvoicePilot</CardTitle>
-          <CardDescription className="text-white mx-auto">
+          <CardDescription className="text-white text-center">
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
@@ -107,7 +107,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <button
-                    onClick={() => { toast(`Not yet`) }}
+                    onClick={() => { toast.info(`Not yet`) }}
                     className="ml-auto inline-block text-sm  underline-offset-4 hover:underline animate-accordion-down"
                   >
                     Forgot your password?
@@ -125,7 +125,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   Login with Google
                 </Button>
                 <FieldDescription className="text-center text-white ">
-                  Don&apos;t have an account? <Link to={"/register"} className="text-white/80 hover:text-blue-400" >Sign up</Link>
+                  Don&apos;t have an account? <Link to={"/register"} className="text-white/80 hover:text-accent transition-all duration-200 ease-in-out" >Sign up</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
