@@ -53,7 +53,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       toast.success(`Welcome back, ${userName}!`)
       navigate("/dashboard")
     }
-
   }
 
   const handleGoogleLogin = async () => {
