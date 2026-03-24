@@ -18,49 +18,38 @@ import { useState } from "react"
 import { toast } from "sonner"
 import Loading from "./Global/Loading"
 import { supabase } from "@/lib/Auth/supabase"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { signUpSchema } from "@/lib/Validation/signUpSchema"
+import type { signUpValues } from "@/lib/Validation/signUpSchema"
 
 export function SignupForm() {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleCreateAccount = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const form = useForm<signUpValues>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    }
+  })
+
+  const handleCreateAccount = async (values: signUpValues) => {
     setError(null);
     setLoading(true);
 
-    if (!name.trim()) {
-      setError("Please enter a username");
-      toast(`Please enter a Name`)
-      setLoading(false);
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      setLoading(false);
-      toast.warning(`Password do not match!`)
-      return;
-    }
-
-    if (password.length < 6) {
-      toast.info("Password must be atleast 6 characters!")
-      setLoading(false);
-      return;
-    }
-
     const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
+      email: values.email,
+      password: values.password,
       options: {
         emailRedirectTo: `${window.location.origin}/dashboard`,
         data: {
-          username: name.trim()
+          username: values.fullName.trim()
         },
       },
     });
@@ -68,10 +57,8 @@ export function SignupForm() {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
-      toast.warning('Something didn\'t go right.')
-      console.error(error)
-      return
+      toast.error(error.message);
+      return;
     }
 
     if (data.user) {
@@ -96,10 +83,6 @@ export function SignupForm() {
     setLoading(false);
   }
 
-  if (error) {
-    toast.warning(error)
-  }
-
   return (
     <Card className="bg-secondary text-white px-8 py-10 w-90 md:w-100 mx-auto">
       <CardHeader className="">
@@ -109,31 +92,31 @@ export function SignupForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleCreateAccount}>
+        <form {...form} onSubmit={form.handleSubmit(handleCreateAccount, (errors) => {
+          const firstError = Object.values(errors)[0];
+          if (firstError?.message) {
+            toast.error(firstError.message as string);
+          }
+        })}>
           <FieldGroup>
+
             <Field>
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
-
-              <Input className="placeholder:pl-1 placeholder:text-white/70 font-light " id="name" type="text" placeholder="John Doe" value={name}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setName(value.toLowerCase().split(' ')
-                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')
-                  );
-                }} />
+              <Input {...form.register("fullName")} className="placeholder:pl-1 placeholder:text-white/70 font-light " id="name" type="text"
+                placeholder="John Doe"
+              />
             </Field>
+
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
 
               <Input
+                {...form.register("email")}
                 className="placeholder:pl-1 placeholder:text-white/70 font-light"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 id="email"
                 type="email"
                 placeholder="m@example.com"
-                required
+
               />
 
               <FieldDescription className="text-white/60 font-light">
@@ -144,17 +127,18 @@ export function SignupForm() {
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
 
-              <Input id="password" type="password" required disabled={loading} value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Input
+                {...form.register("password")}
+                id="password" type="password" disabled={loading} />
 
               <Field>
                 <FieldLabel htmlFor="confirm-password">
                   Confirm Password
                 </FieldLabel>
 
-                <Input value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  disabled={loading} id="confirm-password" type="password" required />
-
+                <Input
+                  {...form.register("confirmPassword")}
+                  disabled={loading} id="confirm-password" type="password" />
               </Field>
               <FieldDescription className="text-white/60 font-light">
                 Must be at least 6 characters long.
@@ -177,5 +161,6 @@ export function SignupForm() {
         </form>
       </CardContent>
     </Card>
+
   )
 }
