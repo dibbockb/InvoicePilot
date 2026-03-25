@@ -19,31 +19,38 @@ import { useState } from "react"
 import Loading from "./Global/Loading"
 import { toast } from "sonner"
 import { supabase } from "@/lib/Auth/supabase"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { loginSchema } from "@/lib/Validation/loginSchema"
+import type { loginValues } from "@/lib/Validation/loginSchema"
 
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>("");
+  const form = useForm<loginValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    }
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
+
   //###reverse engineer this
-  const handleEmailLogin = async (e: React.SubmitEvent) => {
-    e.preventDefault();
-    setError(null);
+  const handleEmailLogin = async (values: loginValues) => {
     setLoading(true);
 
     const { error, data } = await supabase.auth.signInWithPassword({
-      email, password
+      email: values.email,
+      password: values.password,
     })
 
     setLoading(false);
 
     if (error) {
-      setError(error.message);
       toast.error(error.message);
       return
     }
@@ -56,7 +63,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
   }
 
   const handleGoogleLogin = async () => {
-    setError(null)
     setLoading(true)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -71,12 +77,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     setLoading(false);
   }
 
-  if (error) {
-    console.log(error);
-    toast.error(error);
-  }
-
-
   return (
     <div className={cn("flex flex-col w-85 gap-6 md:w-100 py-45 mx-auto ",)} {...props}>
       <Card className="bg-secondary text-white px-8">
@@ -87,16 +87,21 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleEmailLogin}>
+          <form {...form} onSubmit={form.handleSubmit(handleEmailLogin, (errors) => {
+            const firstError = Object.values(errors)[0];
+            if (firstError?.message) {
+              toast.error(firstError.message as string);
+            }
+          })}>
+
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
+                  {...form.register("email")}
                   id="email"
                   type="email"
                   placeholder="jhon@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={loading}
                   className="placeholder:pl-1 placeholder:text-white/70 font-light h-10 transition-all durtation-300 ease-in-out"
@@ -106,14 +111,16 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <button
-                    onClick={() => { toast.info(`Not yet`) }}
+                    type="button"
+                    onClick={() => { toast.info(`Soon!`) }}
                     className="ml-auto inline-block text-sm  underline-offset-4 hover:underline animate-accordion-down"
                   >
                     Forgot your password?
                   </button>
                 </div>
-                <Input id="password" className=" h-10" type="password" value={password}
-                  onChange={(e) => setPassword(e.target.value)} disabled={loading} required />
+                <Input
+                  {...form.register("password")}
+                  id="password" className=" h-10" type="password" />
               </Field>
               <Field className="text-black">
                 <Button type="submit" disabled={loading} className="h-10 bg-accent hover:bg-accent/70 shadow-md hover:shadow-lg hover:outline-1 outline-white"  >

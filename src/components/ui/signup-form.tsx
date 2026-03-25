@@ -25,10 +25,6 @@ import type { signUpValues } from "@/lib/Validation/signUpSchema"
 
 export function SignupForm() {
 
-  const [error, setError] = useState<string | null>("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
   const form = useForm<signUpValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -38,6 +34,11 @@ export function SignupForm() {
       confirmPassword: "",
     }
   })
+
+  const [, setError] = useState<string | null>("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleCreateAccount = async (values: signUpValues) => {
     setError(null);
