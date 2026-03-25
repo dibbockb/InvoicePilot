@@ -17,13 +17,12 @@ import { useState } from "react";
 
 const Navbar = () => {
     const [isOpen, setisOpen] = useState(false)
-
-
     const { user } = useAuthStore();
+
     const handleLogout = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) {
-            console.error(`Error loggin out :::`, error);
+            toast.error(`Error loggin out`);
         }
         toast.info(`Logged out!`);
     }

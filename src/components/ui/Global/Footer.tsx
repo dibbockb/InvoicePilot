@@ -55,7 +55,7 @@ const Footer = () => {
                 {/* footer sub */}
                 <section className="flex flex-col justify-center items-center md:items-start gap-2">
                     <p className="pl-2">Subscribe to our newsletter</p>
-                    <input type="text" placeholder="Your e-mail" className="bg-white/10 rounded-3xl active:ring-1 shadow-md hover:shadow-lg h-10 max-w-75 lg:w-85 pl-5 transition-all duration-300" />
+                    <input type="text" placeholder="Your e-mail" className="bg-white/10 placeholder:pl-1 rounded-xl shadow-lg h-10 max-w-75 lg:w-85 pl-5 transition-all duration-300" />
                     <button onClick={handleSubscribe} className="text-white bg-accent hover:brightness-85 transition-all shadow-md hover:shadow-lg duration-300 h-8 md:h-10 px-5 rounded-xl ">Subscribe</button>
                 </section>
             </div>
