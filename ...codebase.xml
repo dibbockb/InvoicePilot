@@ -45,11 +45,13 @@ components.json
 eslint.config.js
 index.html
 package.json
+pnpm-workspace.yaml
 public/assets/dash-preview.png
 public/assets/hero-dashboard.png
 public/assets/icon.ico
 public/assets/icon.svg
 README.md
+src/App.tsx
 src/components/ui/alert-dialog.tsx
 src/components/ui/button.tsx
 src/components/ui/card.tsx
@@ -82,7 +84,9 @@ src/layout/Layout.tsx
 src/lib/Auth/AuthProvider.tsx
 src/lib/Auth/authStore.ts
 src/lib/Auth/supabase.ts
+src/lib/PrivateRoute/PrivateRoute.tsx
 src/lib/utils.ts
+src/lib/Validation/loginSchema.ts
 src/lib/Validation/signUpSchema.ts
 src/main.tsx
 src/router/index.tsx
@@ -94,6 +98,19 @@ vite.config.ts
 
 <files>
 This section contains the contents of the repository's files.
+
+<file path="src/lib/PrivateRoute/PrivateRoute.tsx">
+import Loading from "@/components/ui/Global/Loading";
+import { useAuthStore } from "../Auth/authStore";
+import { Navigate, Outlet } from 'react-router-dom';
+
+export const PrivateRoute = () => {
+    const { user, loading } = useAuthStore();
+
+    if (loading) { return <Loading /> }
+    return user ? <Outlet /> : <Navigate to={"/login"} replace />
+}
+</file>
 
 <file path="eslint.config.js">
 import js from '@eslint/js'
@@ -119,6 +136,12 @@ export default defineConfig([
     },
   },
 ])
+</file>
+
+<file path="pnpm-workspace.yaml">
+allowBuilds:
+  esbuild: false
+  msw: false
 </file>
 
 <file path="public/assets/icon.svg">
@@ -822,7 +845,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     setAuth: (session) => set({
         session,
         user: session?.user ?? null,
-        loading: false
+        loading: false,
     }),
     setLoading: (loading) => set({ loading }),
 }));
@@ -845,23 +868,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 </file>
 
-<file path="src/lib/Validation/signUpSchema.ts">
+<file path="src/lib/Validation/loginSchema.ts">
 import * as z from "zod";
 
-const signUpSchema = z.object({
-    fullName: z.string(),
-    email: z.email(),
-    password: z.string()
-        .min(6, "Must be at least 6 characters long.")
-        .max(24, "Please choose a password below 24 characters!"),
-    confirmPassword: z.string()
-        .refine((data) => data.password === data.confirmPassword, {
-            message: "Passwords do not match!",
-            path: ['confirmPassword'],
-        }
+export const loginSchema = z.object({
+    email: z.email("Invalid email address"),
+    password: z.string().min(6, "Must be atleast 6 characters long.")
+        .max(24, "Please choose a password below 24 characters!")
 })
 
-export type signUpValues = z.infer<typeof signUpSchema>;
+export type loginValues = z.infer<typeof loginSchema>;
 </file>
 
 <file path="tsconfig.node.json">
@@ -1297,6 +1313,25 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 }
 </file>
 
+<file path="src/lib/Validation/signUpSchema.ts">
+import * as z from "zod";
+
+export const signUpSchema = z.object({
+    fullName: z.string(),
+    email: z.email(),
+    password: z.string()
+        .min(6, "Must be at least 6 characters long.")
+        .max(24, "Please choose a password below 24 characters!"),
+    confirmPassword: z.string()
+})
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match",
+        path: ["confirmPassword"]
+    })
+
+export type signUpValues = z.infer<typeof signUpSchema>;
+</file>
+
 <file path="tsconfig.app.json">
 {
   "compilerOptions": {
@@ -1307,7 +1342,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     "module": "ESNext",
     "types": ["vite/client"],
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -1445,6 +1479,26 @@ node_moduels
 .vercel
 </file>
 
+<file path="src/App.tsx">
+import { Navigate, Outlet } from 'react-router-dom';
+import Loading from "@/components/ui/Global/Loading";
+import { useAuthStore } from './lib/Auth/authStore';
+
+export const PrivateRoute = () => {
+    const { user, loading } = useAuthStore();
+
+    if (loading) {
+        return (
+            <div className="flex h-screen mx-auto items-center justify-center bg-primary">
+                <Loading />
+            </div>
+        );
+    }
+
+    return user ? <Outlet /> : <Navigate to="/login" replace />;
+};
+</file>
+
 <file path="src/router/index.tsx">
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
@@ -1459,6 +1513,7 @@ import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
 import Dashboard from "@/components/ui/Dashboard/Dashboard";
 import Profile from "@/components/ui/Profile/Profile";
+import { PrivateRoute } from "@/lib/PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -1473,8 +1528,13 @@ export const router = createBrowserRouter([
         { path: "/register", element: <Register ></Register> },
         ]
     },
-    { path: '/dashboard', element: <Dashboard></Dashboard>, },
-    { path: '/profile', element: <Profile></Profile>, },
+    {
+        Component: PrivateRoute, children: [
+            { path: '/dashboard', element: <Dashboard></Dashboard>, },
+            { path: '/profile', element: <Profile></Profile>, },
+        ]
+    },
+
     { path: '*', element: <div>404 - Page Not Found</div>, },
 ])
 </file>
@@ -1518,7 +1578,6 @@ import { RouterProvider } from "react-router-dom";
 import { router } from './router';
 import { Toaster } from "@/components/ui/sonner"
 import AuthProvider from './lib/Auth/AuthProvider';
-
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -1821,66 +1880,6 @@ body {
 }
 </file>
 
-<file path="package.json">
-{
-  "name": "invoicepilot",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@base-ui/react": "^1.3.0",
-    "@fontsource-variable/geist": "^5.2.8",
-    "@supabase/auth-ui-react": "^0.4.7",
-    "@supabase/auth-ui-shared": "^0.1.8",
-    "@supabase/supabase-js": "^2.99.3",
-    "@tailwindcss/vite": "^4.2.2",
-    "@tanstack/react-query": "^5.95.0",
-    "aos": "3.0.0-beta.6",
-    "axios": "^1.13.6",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.577.0",
-    "next-themes": "^0.4.6",
-    "react": "^19.2.4",
-    "react-awesome-reveal": "^4.3.1",
-    "react-dom": "^19.2.4",
-    "react-fast-marquee": "^1.6.5",
-    "react-icons": "^5.6.0",
-    "react-router-dom": "^7.13.1",
-    "shadcn": "^4.1.0",
-    "sonner": "^2.0.7",
-    "tailwind-merge": "^3.5.0",
-    "tw-animate-css": "^1.4.0",
-    "zod": "^4.3.6",
-    "zustand": "^5.0.12"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@types/aos": "^3.0.7",
-    "@types/node": "^24.12.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.2.0",
-    "autoprefixer": "^10.4.27",
-    "eslint": "^9.39.4",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.26",
-    "globals": "^16.5.0",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.2",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.57.1",
-    "vite": "^7.3.1"
-  }
-}
-</file>
-
 <file path="src/components/ui/Landing/Hero.tsx">
 import { Link } from "react-router-dom"
 import { Fade } from "react-awesome-reveal";
@@ -2137,187 +2136,65 @@ const Hero = () => {
 export default Hero
 </file>
 
-<file path="src/components/ui/signup-form.tsx">
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
-import { toast } from "sonner"
-import Loading from "./Global/Loading"
-import { supabase } from "@/lib/Auth/supabase"
-
-export function SignupForm() {
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const handleCreateAccount = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-
-    if (!name.trim()) {
-      setError("Please enter a username");
-      toast(`Please enter a Name`)
-      setLoading(false);
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      setLoading(false);
-      toast.warning(`Password do not match!`)
-      return;
-    }
-
-    if (password.length < 6) {
-      toast.info("Password must be atleast 6 characters!")
-      setLoading(false);
-      return;
-    }
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
-        data: {
-          username: name.trim()
-        },
-      },
-    });
-
-    setLoading(false);
-
-    if (error) {
-      setError(error.message);
-      toast.warning('Something didn\'t go right.')
-      console.error(error)
-      return
-    }
-
-    if (data.user) {
-      toast.success("Welcome to InvoicePilot!")
-      navigate('/dashboard')
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setError(null)
-    setLoading(true)
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`
-      }
-    })
-
-    if (error) {
-      toast.warning('Something didn\'t go well.')
-    }
-    setLoading(false);
+<file path="package.json">
+{
+  "name": "invoicepilot",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.3.0",
+    "@fontsource-variable/geist": "^5.2.8",
+    "@hookform/resolvers": "^5.2.2",
+    "@supabase/auth-ui-react": "^0.4.7",
+    "@supabase/auth-ui-shared": "^0.1.8",
+    "@supabase/supabase-js": "^2.99.3",
+    "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/react-query": "^5.95.0",
+    "aos": "3.0.0-beta.6",
+    "axios": "^1.13.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.577.0",
+    "next-themes": "^0.4.6",
+    "react": "^19.2.4",
+    "react-awesome-reveal": "^4.3.1",
+    "react-dom": "^19.2.4",
+    "react-fast-marquee": "^1.6.5",
+    "react-hook-form": "^7.72.0",
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^7.13.1",
+    "shadcn": "^4.1.0",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0",
+    "tw-animate-css": "^1.4.0",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/aos": "^3.0.7",
+    "@types/node": "^24.12.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "autoprefixer": "^10.4.27",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "globals": "^16.5.0",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.57.1",
+    "vite": "^7.3.1"
   }
-
-  if (error) {
-    toast.warning(error)
-  }
-
-  return (
-    <Card className="bg-secondary text-white px-8 py-10 w-90 md:w-100 mx-auto">
-      <CardHeader className="">
-        <CardTitle className="mx-auto text-2xl ">Create an account</CardTitle>
-        <CardDescription className="text-white text-center">
-          Enter your information below to create your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleCreateAccount}>
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
-
-              <Input className="placeholder:pl-1 placeholder:text-white/70 font-light " id="name" type="text" placeholder="John Doe" value={name}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setName(value.toLowerCase().split(' ')
-                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')
-                  );
-                }} />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-
-              <Input
-                className="placeholder:pl-1 placeholder:text-white/70 font-light"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-
-              <FieldDescription className="text-white/60 font-light">
-                We&apos;ll use this to contact you. We will not share your email
-                with anyone else.
-              </FieldDescription>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-
-              <Input id="password" type="password" required disabled={loading} value={password} onChange={(e) => setPassword(e.target.value)} />
-
-              <Field>
-                <FieldLabel htmlFor="confirm-password">
-                  Confirm Password
-                </FieldLabel>
-
-                <Input value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  disabled={loading} id="confirm-password" type="password" required />
-
-              </Field>
-              <FieldDescription className="text-white/60 font-light">
-                Must be at least 6 characters long.
-              </FieldDescription>
-            </Field>
-            <FieldGroup>
-              <Field>
-                <Button className="h-10 bg-accent hover:bg-accent/70 shadow-md hover:shadow-lg hover:outline-1 outline-white" type="submit">
-                  {loading ? <Loading></Loading> : "Create Account"}
-                </Button>
-                <Button className="h-10 shadow-md hover:shadow-lg text-black" variant="outline" type="button" onClick={handleGoogleLogin}>
-                  Sign up with Google
-                </Button>
-                <FieldDescription className="px-6 text-center text-white">
-                  Already have an account? <Link className="text-white/80 hover:text-accent transition-all duration-200 ease-in-out" to="/login">Log in</Link>
-                </FieldDescription>
-              </Field>
-            </FieldGroup>
-          </FieldGroup>
-        </form>
-      </CardContent>
-    </Card>
-  )
 }
 </file>
 
@@ -2343,31 +2220,38 @@ import { useState } from "react"
 import Loading from "./Global/Loading"
 import { toast } from "sonner"
 import { supabase } from "@/lib/Auth/supabase"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { loginSchema } from "@/lib/Validation/loginSchema"
+import type { loginValues } from "@/lib/Validation/loginSchema"
 
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>("");
+  const form = useForm<loginValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    }
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
+
   //###reverse engineer this
-  const handleEmailLogin = async (e: React.SubmitEvent) => {
-    e.preventDefault();
-    setError(null);
+  const handleEmailLogin = async (values: loginValues) => {
     setLoading(true);
 
     const { error, data } = await supabase.auth.signInWithPassword({
-      email, password
+      email: values.email,
+      password: values.password,
     })
 
     setLoading(false);
 
     if (error) {
-      setError(error.message);
       toast.error(error.message);
       return
     }
@@ -2380,7 +2264,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
   }
 
   const handleGoogleLogin = async () => {
-    setError(null)
     setLoading(true)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -2395,12 +2278,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     setLoading(false);
   }
 
-  if (error) {
-    console.log(error);
-    toast.error(error);
-  }
-
-
   return (
     <div className={cn("flex flex-col w-85 gap-6 md:w-100 py-45 mx-auto ",)} {...props}>
       <Card className="bg-secondary text-white px-8">
@@ -2411,16 +2288,21 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleEmailLogin}>
+          <form {...form} onSubmit={form.handleSubmit(handleEmailLogin, (errors) => {
+            const firstError = Object.values(errors)[0];
+            if (firstError?.message) {
+              toast.error(firstError.message as string);
+            }
+          })}>
+
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
+                  {...form.register("email")}
                   id="email"
                   type="email"
                   placeholder="jhon@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={loading}
                   className="placeholder:pl-1 placeholder:text-white/70 font-light h-10 transition-all durtation-300 ease-in-out"
@@ -2430,14 +2312,16 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <button
-                    onClick={() => { toast.info(`Not yet`) }}
+                    type="button"
+                    onClick={() => { toast.info(`Soon!`) }}
                     className="ml-auto inline-block text-sm  underline-offset-4 hover:underline animate-accordion-down"
                   >
                     Forgot your password?
                   </button>
                 </div>
-                <Input id="password" className=" h-10" type="password" value={password}
-                  onChange={(e) => setPassword(e.target.value)} disabled={loading} required />
+                <Input
+                  {...form.register("password")}
+                  id="password" className=" h-10" type="password" />
               </Field>
               <Field className="text-black">
                 <Button type="submit" disabled={loading} className="h-10 bg-accent hover:bg-accent/70 shadow-md hover:shadow-lg hover:outline-1 outline-white"  >
@@ -2456,6 +2340,176 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
         </CardContent>
       </Card>
     </div>
+  )
+}
+</file>
+
+<file path="src/components/ui/signup-form.tsx">
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { toast } from "sonner"
+import Loading from "./Global/Loading"
+import { supabase } from "@/lib/Auth/supabase"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { signUpSchema } from "@/lib/Validation/signUpSchema"
+import type { signUpValues } from "@/lib/Validation/signUpSchema"
+
+export function SignupForm() {
+
+  const form = useForm<signUpValues>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    }
+  })
+
+  const [, setError] = useState<string | null>("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+
+  const handleCreateAccount = async (values: signUpValues) => {
+    setError(null);
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signUp({
+      email: values.email,
+      password: values.password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/dashboard`,
+        data: {
+          username: values.fullName.trim()
+        },
+      },
+    });
+
+    setLoading(false);
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    if (data.user) {
+      toast.success("Welcome to InvoicePilot!")
+      navigate('/dashboard')
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError(null)
+    setLoading(true)
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/dashboard`
+      }
+    })
+
+    if (error) {
+      toast.warning('Something didn\'t go well.')
+    }
+    setLoading(false);
+  }
+
+  return (
+    <Card className="bg-secondary text-white px-8 py-10 w-90 md:w-100 mx-auto">
+      <CardHeader className="">
+        <CardTitle className="mx-auto text-2xl ">Create an account</CardTitle>
+        <CardDescription className="text-white text-center">
+          Enter your information below to create your account
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form {...form} onSubmit={form.handleSubmit(handleCreateAccount, (errors) => {
+          const firstError = Object.values(errors)[0];
+          if (firstError?.message) {
+            toast.error(firstError.message as string);
+          }
+        })}>
+          <FieldGroup>
+
+            <Field>
+              <FieldLabel htmlFor="name">Full Name</FieldLabel>
+              <Input {...form.register("fullName")} className="placeholder:pl-1 placeholder:text-white/70 font-light " id="name" type="text"
+                placeholder="John Doe"
+              />
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+
+              <Input
+                {...form.register("email")}
+                className="placeholder:pl-1 placeholder:text-white/70 font-light"
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+
+              />
+
+              <FieldDescription className="text-white/60 font-light">
+                We&apos;ll use this to contact you. We will not share your email
+                with anyone else.
+              </FieldDescription>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="password">Password</FieldLabel>
+
+              <Input
+                {...form.register("password")}
+                id="password" type="password" disabled={loading} />
+
+              <Field>
+                <FieldLabel htmlFor="confirm-password">
+                  Confirm Password
+                </FieldLabel>
+
+                <Input
+                  {...form.register("confirmPassword")}
+                  disabled={loading} id="confirm-password" type="password" />
+              </Field>
+              <FieldDescription className="text-white/60 font-light">
+                Must be at least 6 characters long.
+              </FieldDescription>
+            </Field>
+            <FieldGroup>
+              <Field>
+                <Button className="h-10 bg-accent hover:bg-accent/70 shadow-md hover:shadow-lg hover:outline-1 outline-white" type="submit">
+                  {loading ? <Loading></Loading> : "Create Account"}
+                </Button>
+                <Button className="h-10 shadow-md hover:shadow-lg text-black" variant="outline" type="button" onClick={handleGoogleLogin}>
+                  Sign up with Google
+                </Button>
+                <FieldDescription className="px-6 text-center text-white">
+                  Already have an account? <Link className="text-white/80 hover:text-accent transition-all duration-200 ease-in-out" to="/login">Log in</Link>
+                </FieldDescription>
+              </Field>
+            </FieldGroup>
+          </FieldGroup>
+        </form>
+      </CardContent>
+    </Card>
+
   )
 }
 </file>

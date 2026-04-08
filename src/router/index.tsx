@@ -11,6 +11,7 @@ import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
 import Dashboard from "@/components/ui/Dashboard/Dashboard";
 import Profile from "@/components/ui/Profile/Profile";
+import { PrivateRoute } from "@/lib/PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -25,7 +26,12 @@ export const router = createBrowserRouter([
         { path: "/register", element: <Register ></Register> },
         ]
     },
-    { path: '/dashboard', element: <Dashboard></Dashboard>, },
-    { path: '/profile', element: <Profile></Profile>, },
+    {
+        Component: PrivateRoute, children: [
+            { path: '/dashboard', element: <Dashboard></Dashboard>, },
+            { path: '/profile', element: <Profile></Profile>, },
+        ]
+    },
+
     { path: '*', element: <div>404 - Page Not Found</div>, },
 ])
