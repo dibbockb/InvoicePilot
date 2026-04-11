@@ -99,19 +99,6 @@ vite.config.ts
 <files>
 This section contains the contents of the repository's files.
 
-<file path="src/lib/PrivateRoute/PrivateRoute.tsx">
-import Loading from "@/components/ui/Global/Loading";
-import { useAuthStore } from "../Auth/authStore";
-import { Navigate, Outlet } from 'react-router-dom';
-
-export const PrivateRoute = () => {
-    const { user, loading } = useAuthStore();
-
-    if (loading) { return <Loading /> }
-    return user ? <Outlet /> : <Navigate to={"/login"} replace />
-}
-</file>
-
 <file path="eslint.config.js">
 import js from '@eslint/js'
 import globals from 'globals'
@@ -826,37 +813,25 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
 export { Spinner }
 </file>
 
-<file path="src/lib/Auth/authStore.ts">
-import { create } from 'zustand';
-import type { Session, User } from "@supabase/supabase-js";
-
-interface AuthState {
-    user: User | null;
-    session: Session | null;
-    loading: boolean;
-    setAuth: (session: Session | null) => void;
-    setLoading: (loading: boolean) => void;
-}
-
-export const useAuthStore = create<AuthState>((set) => ({
-    user: null,
-    session: null,
-    loading: true,
-    setAuth: (session) => set({
-        session,
-        user: session?.user ?? null,
-        loading: false,
-    }),
-    setLoading: (loading) => set({ loading }),
-}));
-</file>
-
 <file path="src/lib/Auth/supabase.ts">
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
 export const supabase = createClient(supabaseUrl, supabaseKey);
+</file>
+
+<file path="src/lib/PrivateRoute/PrivateRoute.tsx">
+import Loading from "@/components/ui/Global/Loading";
+import { useAuthStore } from "../Auth/authStore";
+import { Navigate, Outlet } from 'react-router-dom';
+
+export const PrivateRoute = () => {
+    const { user, loading } = useAuthStore();
+
+    if (loading) { return <Loading /> }
+    return user ? <Outlet /> : <Navigate to={"/login"} replace />
+}
 </file>
 
 <file path="src/lib/utils.ts">
@@ -1313,6 +1288,31 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 }
 </file>
 
+<file path="src/lib/Auth/authStore.ts">
+import { create } from 'zustand';
+import type { Session, User } from "@supabase/supabase-js";
+
+interface AuthState {
+    user: User | null;
+    session: Session | null;
+    loading: boolean;
+    setAuth: (session: Session | null) => void;
+    setLoading: (loading: boolean) => void;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+    user: null,
+    session: null,
+    loading: true,
+    setAuth: (session) => set({
+        session,
+        user: session?.user ?? null,
+        loading: false,
+    }),
+    setLoading: (loading) => set({ loading }),
+}));
+</file>
+
 <file path="src/lib/Validation/signUpSchema.ts">
 import * as z from "zod";
 
@@ -1330,36 +1330,6 @@ export const signUpSchema = z.object({
     })
 
 export type signUpValues = z.infer<typeof signUpSchema>;
-</file>
-
-<file path="tsconfig.app.json">
-{
-  "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "types": ["vite/client"],
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["src"]
-}
 </file>
 
 <file path="index.html">
@@ -1413,6 +1383,36 @@ const Home = () => {
 };
 
 export default Home;
+</file>
+
+<file path="tsconfig.app.json">
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": ["src"]
+}
 </file>
 
 <file path="tsconfig.json">
@@ -1499,6 +1499,37 @@ export const PrivateRoute = () => {
 };
 </file>
 
+<file path="src/features/auth/Login.tsx">
+import { LoginForm } from "@/components/ui/login-form"
+import { Fade } from "react-awesome-reveal"
+
+const Login = () => {
+    return (
+        <Fade>
+            <LoginForm ></LoginForm>
+        </Fade>
+    )
+}
+
+export default Login
+</file>
+
+<file path="src/layout/Layout.tsx">
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/ui/Global/Navbar";
+import Footer from "../components/ui/Global/Footer";
+
+export default function Layout() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </div>
+  );
+}
+</file>
+
 <file path="src/router/index.tsx">
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
@@ -1537,57 +1568,6 @@ export const router = createBrowserRouter([
 
     { path: '*', element: <div>404 - Page Not Found</div>, },
 ])
-</file>
-
-<file path="src/features/auth/Login.tsx">
-import { LoginForm } from "@/components/ui/login-form"
-import { Fade } from "react-awesome-reveal"
-
-const Login = () => {
-    return (
-        <Fade>
-            <LoginForm ></LoginForm>
-        </Fade>
-    )
-}
-
-export default Login
-</file>
-
-<file path="src/layout/Layout.tsx">
-import { Outlet } from "react-router-dom";
-import Navbar from "../components/ui/Global/Navbar";
-import Footer from "../components/ui/Global/Footer";
-
-export default function Layout() {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </div>
-  );
-}
-</file>
-
-<file path="src/main.tsx">
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { RouterProvider } from "react-router-dom";
-import { router } from './router';
-import { Toaster } from "@/components/ui/sonner"
-import AuthProvider from './lib/Auth/AuthProvider';
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <AuthProvider>
-      <Toaster />
-      <RouterProvider router={router} />
-    </AuthProvider>
-
-  </StrictMode>
-)
 </file>
 
 <file path="src/components/ui/Global/Footer.tsx">
@@ -1659,6 +1639,26 @@ const Footer = () => {
 }
 
 export default Footer
+</file>
+
+<file path="src/main.tsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import { RouterProvider } from "react-router-dom";
+import { router } from './router';
+import { Toaster } from "@/components/ui/sonner"
+import AuthProvider from './lib/Auth/AuthProvider';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <AuthProvider>
+      <Toaster />
+      <RouterProvider router={router} />
+    </AuthProvider>
+
+  </StrictMode>
+)
 </file>
 
 <file path="src/index.css">
