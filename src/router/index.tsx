@@ -11,6 +11,9 @@ import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
 import Dashboard from "@/components/ui/Dashboard/Dashboard";
 import Profile from "@/components/ui/Profile/Profile";
+import Invoices from "@/components/ui/Dashboard/Invoices/Invoices";
+import Clients from "@/components/ui/Dashboard/Clients/Clients";
+import Settings from "@/components/ui/Dashboard/User/Settings";
 import { PrivateRoute } from "@/lib/PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -28,10 +31,16 @@ export const router = createBrowserRouter([
     },
     {
         Component: PrivateRoute, children: [
-            { path: '/dashboard', element: <Dashboard></Dashboard>, },
             { path: '/profile', element: <Profile></Profile>, },
+            {
+                path: '/dashboard', element: <Dashboard></Dashboard>, children: [
+                    { path: "/dashboard/invoices", element: <Invoices></Invoices> },
+                    { path: "/dashboard/clients", element: <Clients></Clients> },
+                    { path: "/dashboard/settings", element: <Settings></Settings> },
+                ]
+            },
         ]
     },
 
-    { path: '*', element: <div>404 - Page Not Found</div>, },
+    { path: '*', element: <p>404 - Page Not Found</p>, },
 ])

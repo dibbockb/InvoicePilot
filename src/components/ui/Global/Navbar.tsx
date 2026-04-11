@@ -32,7 +32,7 @@ const Navbar = () => {
         <nav className="relative bg-primary px-6 md:px-12 lg:px-40 py-5 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
             <div className="justify-self-start">
                 <Link to="/" className="flex items-center gap-3 hover:scale-110 transition-all duration-200">
-                    <img src="/assets/icon.svg" alt="navbar-icon" className="h-10 w-10" />
+                    <img src="/assets/icon.png" alt="navbar-icon" className="h-10 w-10" />
                     <div className="text-accent text-2xl font-medium hidden md:block">InvoicePilot</div>
                 </Link>
             </div>
