@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom"
 const Dashboard = () => {
     return (
         <main className="flex flex-col lg:flex-row h-screen overflow-hidden">
-
+            
             <aside className="flex justify-center lg:flex-col lg:justify-start py-3 bg-[#0F172A] min-h-15 lg:min-h-screen lg:w-xs lg:px-4
             fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl">
 

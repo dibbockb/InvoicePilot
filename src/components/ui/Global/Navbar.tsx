@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { toast } from "sonner";
 import { useAuthStore } from "@/lib/Auth/authStore";
 import { supabase } from "@/lib/Auth/supabase";
+import { motion } from "motion/react";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -29,7 +30,12 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="relative bg-primary px-6 md:px-12 lg:px-40 py-5 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
+        <motion.nav
+            initial={{ opacity: 0, filter: "blur(15px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+
+            className="relative bg-primary px-6 md:px-12 lg:px-40 py-5 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
             <div className="justify-self-start">
                 <Link to="/" className="flex items-center gap-3 hover:scale-110 transition-all duration-200">
                     <img src="/assets/icon.png" alt="navbar-icon" className="h-10 w-10" />
@@ -135,7 +141,7 @@ const Navbar = () => {
 
                 </div>
             )}
-        </nav>
+        </motion.nav>
     )
 }
 export default Navbar
